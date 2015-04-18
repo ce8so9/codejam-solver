@@ -47,7 +47,7 @@ problem. All the resources are in the [example] directory.
 | PyPy            | 1.2  | 0.4 |
 
 [Infinite House of Pancakes]: https://code.google.com/codejam/contest/6224486/dashboard#s=p1
-[example]: ../example
+[example]: example
 
 Contact
 -------
