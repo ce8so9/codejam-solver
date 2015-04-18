@@ -100,12 +100,12 @@ def multiprocess_imap(func, iterator):
     pool.close(), pool.join()
 
 
-def parse_file(name, width=1, header=True):
+def parse_file(name, lines_per_case=1, header=True):
     """Generator to parse a file."""
     with open(name) as f:
         header and next(f)
         while True:
-            lines = tuple(next(f) for _ in range(width))
+            lines = tuple(next(f) for _ in range(lines_per_case))
             if not lines:
                 return
             yield lines
@@ -123,7 +123,7 @@ def print_result(case, result, output=None, display=True):
 @make_decorator(cli=get_command_line_kwargs)
 def solver(solver,
            input_file=None, output_file=True,
-           case_width=1, header=True, start=1,
+           lines_per_case=1, header=True, start=1,
            multiprocessing=True, timing=True, display=True):
     """Use a given solver on a given input file."""
     # Get output file
@@ -131,7 +131,7 @@ def solver(solver,
         output_file = input_file.rstrip(".in") + ".out"
     # Prepare solver
     imapping = multiprocess_imap if multiprocessing else imap
-    parser = parse_file(input_file, case_width, header)
+    parser = parse_file(input_file, lines_per_case, header)
     solver = enumerate(imapping(solver, parser), start)
     # Time the execution
     message = "Execution time for {}".format(input_file)

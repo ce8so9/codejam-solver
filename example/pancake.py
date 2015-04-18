@@ -18,7 +18,7 @@ def solve(s):
     return min(test(s, l) for l in xrange(1, max(s)+1))
 
 
-@solver(case_width=2)
+@solver(lines_per_case=2)
 def pancake(lines):
     arg = map(int, lines[1].split())
     return solve(arg)
