@@ -10,16 +10,16 @@ from itertools import imap
 from multiprocessing import Pool
 
 
-def get_command_line_kwargs(func):
+def get_command_line_kwargs(name):
     """Get keyword arguments from the command line."""
-    desc = ("Solve the given input file. "
+    desc = ("Solve the {} problem using a given input file. "
             "By default, an '.out' file is written "
             "with the same name as the input file. "
             "The results are also printed along with "
             "a timing of the whole execution. "
             "Multiprocessing is used by default.")
-    parser = argparse.ArgumentParser(prog=func.__name__,
-                                     description=desc)
+    parser = argparse.ArgumentParser(prog=name,
+                                     description=desc.format(name))
     parser.add_argument('input_file', metavar='INPUT',
                         type=str,
                         help='file to read')
@@ -68,7 +68,8 @@ def make_decorator(dec=None, cli=None):
                     kwargs.update(more_kwargs)
                     return dec(func, *args, **kwargs)
                 if cli:
-                    wrapper.from_cli = lambda: wrapper(**cli(func))
+                    name = func.__name__
+                    wrapper.from_cli = lambda: wrapper(**cli(name))
                 check_function(func)
                 return wrapper
             if func:
