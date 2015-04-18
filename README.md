@@ -18,16 +18,18 @@ Features
 
 Example
 -------
-  
-    from solver import solver
 
-    @solver
-    def square(lines):
-        """Return the square of the given argument."""
-        return int(lines[0]) ** 2
+```python
+from solver import solver
 
-    if __name__ == "__main__":
-        square.from_cli()
+@solver
+def square(lines):
+    """Return the square of the given argument."""
+    return int(lines[0]) ** 2
+
+if __name__ == "__main__":
+    square.from_cli()
+```
 
 Usage
 -----
