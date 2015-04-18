@@ -38,15 +38,16 @@ Usage
 Performance
 -----------
 
-Results in seconds for large input of the [Infinite House of Pancakes][ihp] 
-problem. All the resources are in the `example` directory. 
+Results in seconds for large input of the [Infinite House of Pancakes]
+problem. All the resources are in the [example] directory. 
 
 | Multiprocessing | No   | Yes |
 |-----------------|------|-----|
 | CPython         | 10.5 | 2.9 |
 | PyPy            | 1.2  | 0.4 |
 
-[ihp]: https://code.google.com/codejam/contest/6224486/dashboard#s=p1
+[Infinite House of Pancakes]: https://code.google.com/codejam/contest/6224486/dashboard#s=p1
+[example]: ../example
 
 Contact
 -------
