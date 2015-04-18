@@ -69,6 +69,7 @@ def make_decorator(dec=None, cli=None):
                     return dec(func, *args, **kwargs)
                 if cli:
                     wrapper.from_cli = lambda: wrapper(**cli(func))
+                check_function(func)
                 return wrapper
             if func:
                 return decorator(func)
@@ -81,19 +82,18 @@ def make_decorator(dec=None, cli=None):
 
 def check_function(func):
     """Hack for multiprocessing on CPython."""
-    main = sys.modules[__name__]
+    module = sys.modules[func.__module__]
     # Check
-    if getattr(main, func.__name__, None) is func:
+    if getattr(module, func.__name__, None) is func:
         return
     # Rename
     func.__name__ = "__" + func.__name__
-    setattr(main, func.__name__, func)
+    setattr(module, func.__name__, func)
 
 
 def multiprocess_imap(func, iterator):
     """Multiprocessing version of imap."""
     pool = Pool()
-    check_function(func)
     for result in pool.imap(func, iterator):
         yield result
     pool.close(), pool.join()
