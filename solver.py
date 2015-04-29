@@ -102,9 +102,12 @@ def multiprocess_imap(func, iterator):
 
 def parse_file(name, lines_per_case=1, header=True):
     """Generator to parse a file."""
+    dynamic = (lines_per_case.lower() == "dynamic")
     with open(name) as f:
         header and next(f)
         while True:
+            if dynamic:
+                lines_per_case = int(next(f))
             lines = tuple(next(f) for _ in range(lines_per_case))
             if not lines:
                 return
