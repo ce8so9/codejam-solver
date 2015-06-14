@@ -6,8 +6,11 @@ import argparse
 from timeit import default_timer as time
 from functools import wraps
 from contextlib import contextmanager
-from itertools import imap
 from multiprocessing import Pool
+
+# Compatibility
+try: from itertools import imap as map
+except ImportError: pass
 
 
 def get_command_line_kwargs(name):
@@ -47,7 +50,7 @@ def timeit(message):
     """Context to time an execution."""
     start = time()
     yield
-    print "{}: {:.3f} s".format(message, time() - start)
+    print("{}: {:.3f} s".format(message, time() - start))
 
 
 @contextmanager
@@ -102,7 +105,7 @@ def multiprocess_imap(func, iterator):
 
 def parse_file(name, lines_per_case=1, header=True):
     """Generator to parse a file."""
-    expression = isinstance(lines_per_case, basestring) and lines_per_case
+    expression = isinstance(lines_per_case, str) and lines_per_case
     with open(name) as f:
         header and next(f)
         while True:
@@ -125,7 +128,7 @@ def print_result(case, result, output=None, display=True):
     """Print a result using the correct formatting."""
     line = "Case #{}: {}".format(case, result)
     if display:
-        print line
+        print(line)
     if output:
         output.write(line + '\n')
 
@@ -140,9 +143,9 @@ def solver(solver,
     if output_file is True:
         output_file = input_file.rstrip(".in") + ".out"
     # Prepare solver
-    imapping = multiprocess_imap if multiprocessing else imap
+    mapping = multiprocess_imap if multiprocessing else map
     parser = parse_file(input_file, lines_per_case, header)
-    solver = enumerate(imapping(solver, parser), start)
+    solver = enumerate(mapping(solver, parser), start)
     # Time the execution
     message = "Execution time for {}".format(input_file)
     with timeit(message) if timing else none():

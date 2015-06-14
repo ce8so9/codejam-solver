@@ -6,7 +6,7 @@ A solver module to abstract the recurrent parts of problem solving.
 Requirement
 -----------
 
- - Python 2.7
+ - Python >= 2.7
  - Pytest (optional)
 
 Features

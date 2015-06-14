@@ -1,8 +1,10 @@
 """Solve the 'Infinite House of Pancakes' problem.
-
 https://code.google.com/codejam/contest/6224486/dashboard#s=p1
 """
+
 from solver import solver
+try: range = xrange
+except NameError: pass
 
 
 def cost(n, l):
@@ -15,12 +17,12 @@ def test(s, l):
 
 
 def solve(s):
-    return min(test(s, l) for l in xrange(1, max(s)+1))
+    return min(test(s, l) for l in range(1, max(s) + 1))
 
 
 @solver(lines_per_case=2)
 def pancake(lines):
-    arg = map(int, lines[1].split())
+    arg = [int(x) for x in lines[1].split()]
     return solve(arg)
 
 if __name__ == "__main__":
