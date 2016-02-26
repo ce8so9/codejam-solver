@@ -15,7 +15,7 @@ EXPECTED = OUTPUT + ".expected"
 @yield_fixture(params=[True, False],
                ids=["with multiprocessing", "without multiprocessing"])
 def solve_pancake(request):
-    pancake(INPUT, multiprocessing=request.param)
+    pancake.solve(INPUT, multiprocessing=request.param)
     yield open(OUTPUT).read()
     os.remove(OUTPUT)
 
